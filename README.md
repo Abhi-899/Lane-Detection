@@ -45,5 +45,5 @@ def thresholding(img):
     mask_White= cv2.inRange(hsv,non_White,White)
     return mask_White
  ```
- 
+ Here we are simply converting our image to HSV color space and then applying a range of color to find. This color could be found using the colorpicker.py as discussed earlier which helps to swiftly adjust the threshold(max and min) for each of the HSV channels.
 
