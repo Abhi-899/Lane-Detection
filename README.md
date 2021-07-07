@@ -47,3 +47,5 @@ def thresholding(img):
  ```
  Here we are simply converting our image to HSV color space and then applying a range of color to find. This color could be found using the colorpicker.py as discussed earlier which helps to swiftly adjust the threshold(max and min) for each of the HSV channels.
 
+## Warping
+
