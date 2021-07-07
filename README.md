@@ -136,3 +136,14 @@ def get_hist(img,min_percent=0.1,display=False,region=1):
     return base,img_hist 
   return base
   ```
+## Averaging
+Once we have the curve value we will append it in a list so that we can average this value. Averaging will allow smooth motion and will avoid any dramatic movements.
+```
+curveList.append(curveRaw)
+if len(curveList) > avgVal:
+    curveList.pop(0)
+curve = int(sum(curveList)/len(curveList)
+```
+## Display
+And using the stack images function we can display the entire pipeline as follows:
+![Screenshot (3)](https://user-images.githubusercontent.com/64439578/124734267-94a2fb00-df32-11eb-93db-4316f9722ce7.png)
