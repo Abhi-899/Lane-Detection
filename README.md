@@ -11,3 +11,5 @@ The technical reqirements are as follows:
 • The NumPy module
 
 • The Matplotlib module
+
+To identify the lanes, we need some images and a video. The dataset we will be using here is provided by Murtaza's workshop.The reason behind picking this dataset is the presence of a controlled environment which allows for better and easier thresholding. The methodology and pipeline we follow for this project relies on several assumptions that might not be true in the real world, though it can be adjusted to correct for that.
