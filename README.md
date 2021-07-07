@@ -108,3 +108,31 @@ def warp_img (img,points,w,h,inv=False):
     warpedimg = cv2.warpPerspective(img,mat,(w,h))
     return warpedimg
 ```    
+## Finding the lanes using histograms
+Finding the curve in our path is an integral part.Lets see how we can arrange for that
+
+Our Warped image is now binary i.e it has either black or white pixels, we can sum the pixel values in the y direction.
+![image](https://user-images.githubusercontent.com/64439578/124729400-088ed480-df2e-11eb-92c1-417ca721ccc9.png)
+Given the image, if we sum the pixels in first column it yeilds 255+255+255+255+255 = 1275. We apply this method to each of the columns. In our original Image we have 480 pixels in the width. Therefore we will have 480 values. After summation we can look at how many values are above a certain threshold hold lets say 1000 on each side of the center red line. In the above example we have 8 columns on the left and 3 columns on the right. This tells us that the curve is towards left. Now all we have to find the center of the base which will give us the center line(the red line) and then compare the pixels on both side. The following function does it for us.
+```
+def get_hist(img,min_percent=0.1,display=False,region=1):
+  if region==1:
+      hist_values=np.sum(img,axis=0)
+  else:
+      hist_values=np.sum(img[img.shape[0]//region:,:],axis=0)
+  hist_values=np.sum(img,axis=0)
+  max_pix=np.max(hist_values)
+  min_pix=min_percent*max_pix
+
+  indices=np.where(hist_values>=min_pix)
+  base=int(np.average(indices))
+
+  if display:
+    img_hist=np.zeros((img.shape[0],img.shape[1],3),np.uint8)
+    
+    for x,intensity in enumerate(hist_values):
+      cv2.line(img_hist,(x,img.shape[0]),(x,img.shape[0]-intensity//255//region),(0,255,0),1)
+      cv2.circle(img_hist,(base,img.shape[0]),15,(255,0,0),cv2.FILLED)   
+    return base,img_hist 
+  return base
+  ```
