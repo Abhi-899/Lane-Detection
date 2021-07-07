@@ -147,3 +147,6 @@ curve = int(sum(curveList)/len(curveList)
 ## Display
 And using the stack images function we can display the entire pipeline as follows:
 ![Screenshot (3)](https://user-images.githubusercontent.com/64439578/124734267-94a2fb00-df32-11eb-93db-4316f9722ce7.png)
+
+# NOTE
+The complete code is present in Lane Detection.py and the test video is vid1.mp4
