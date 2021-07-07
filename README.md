@@ -95,3 +95,16 @@ def val_trackbars(wT=480, hT=240):
     return points
     
 ```    
+We can call the initialize function at the start of the code and the valTrackbar in the while loop just before warping the image.
+Now we will write our warping function that will allow us to get the bird eyes view using the four points that we just tuned.
+```
+def warp_img (img,points,w,h,inv=False):
+    pts1 = np.float32(points)
+    pts2 = np.float32([[0,0],[w,0],[0,h],[w,h]])
+    if inv:
+        mat = cv2.getPerspectiveTransform(pts2,pts1)
+    else:
+        mat = cv2.getPerspectiveTransform(pts1,pts2)
+    warpedimg = cv2.warpPerspective(img,mat,(w,h))
+    return warpedimg
+```    
