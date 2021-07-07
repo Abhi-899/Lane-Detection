@@ -47,5 +47,24 @@ def thresholding(img):
  ```
  Here we are simply converting our image to HSV color space and then applying a range of color to find. This color could be found using the colorpicker.py as discussed earlier which helps to swiftly adjust the threshold(max and min) for each of the HSV channels.
 
-## Warping
+## Warping (for Perspective transformation)
+![image](https://user-images.githubusercontent.com/64439578/124719271-98c81c00-df24-11eb-82bf-988f9e36e960.png)
+If we were flying over the road, and watching it from a bird's eye view, the lanes would be
+parallel(as shown in the 3rd image), but in the thresholded(1st) and actual images(2nd) they are not, because of the perspective.
+The perspective depends on the focal length of the lens (lenses with a shorter focal
+length show a stronger perspective) and the position of the camera. Once the camera is
+mounted on a car, the perspective is fixed, so we can take it into consideration and correct
+the image.
 
+OpenCV has a method to compute the perspective transformation:
+
+getPerspectiveTransform().
+
+It takes two parameters, both arrays of four points, identifying the trapezoid of the
+perspective. One array is the source and one array is the destination. This means that the
+same method can be used to compute the inverse transformation, by just swapping the
+parameters:
+```
+pers_mat = cv2.getPerspectiveTransform(src, dst)
+pers_mat_inv = cv2.getPerspectiveTransform(dst,src)
+```
