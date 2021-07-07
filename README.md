@@ -68,3 +68,30 @@ parameters:
 pers_mat = cv2.getPerspectiveTransform(src, dst)
 pers_mat_inv = cv2.getPerspectiveTransform(dst,src)
 ```
+The src are the co-ordinates of the trapezoid whereas the dst are the coordinates of the rectangle.So finally we can get the transformed image by applying:
+```
+cv2.warpPerspective(img, pers_mat, warp_size,flags=cv2.INTER_AREA)
+```
+INTER_AREA is preferrred as we are stretching a part of the image in order to perform the transformation.
+The challenge here is to get the co-ordinates for the src and the dst.We can retrieve them manually by plotting the image with 'axis=True' to get a brief idea of the co-ordinate values. But Murtaza's workshop gives a much better alternative.
+
+We can create two functions for the trackbars. One that initializes the trackbars and the second that get the current value from them.Let us have a look at the 2 functions.
+```
+def init_trackbars(init_track_vals,wT=480, hT=240):
+    cv2.namedWindow("Trackbars")
+    cv2.resizeWindow("Trackbars", 360, 240)
+    cv2.createTrackbar("Width Top", "Trackbars", intialTracbarVals[0],wT//2, nothing)
+    cv2.createTrackbar("Height Top", "Trackbars", intialTracbarVals[1], hT, nothing)
+    cv2.createTrackbar("Width Bottom", "Trackbars", intialTracbarVals[2],wT//2, nothing)
+    cv2.createTrackbar("Height Bottom", "Trackbars", intialTracbarVals[3], hT, nothing)
+ 
+def val_trackbars(wT=480, hT=240):
+    widthTop = cv2.getTrackbarPos("Width Top", "Trackbars")
+    heightTop = cv2.getTrackbarPos("Height Top", "Trackbars")
+    widthBottom = cv2.getTrackbarPos("Width Bottom", "Trackbars")
+    heightBottom = cv2.getTrackbarPos("Height Bottom", "Trackbars")
+    points = np.float32([(widthTop, heightTop), (wT-widthTop, heightTop),
+                      (widthBottom , heightBottom ), (wT-widthBottom, heightBottom)])
+    return points
+    
+```    
